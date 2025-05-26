@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://981526092.github.io/zekunwu.github.io/sitemap.xml
+
+# Crawl-delay (optional)
+Crawl-delay: 1 
