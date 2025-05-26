@@ -1,0 +1,501 @@
+/* News & Blog Section */
+.blog {
+    background: #f8f9fa;
+    padding: 3rem 0 5rem 0;
+    position: relative;
+}
+
+.blog::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(102, 126, 234, 0.2) 50%, transparent 100%);
+}
+
+.blog .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Unified Content Layout */
+.unified-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Filter Controls */
+.filter-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: white;
+    border: 2px solid #e9ecef;
+    color: #6c757d;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.filter-btn.active {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.filter-btn.article.active {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border-color: #e74c3c;
+}
+
+.filter-btn.paper.active {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    border-color: #2ecc71;
+}
+
+.filter-btn.blog.active {
+    background: linear-gradient(135deg, #764ba2, #667eea);
+    border-color: #764ba2;
+}
+
+.filter-btn.event.active {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    border-color: #f39c12;
+}
+
+/* Filter animation for content items */
+.content-item {
+    transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease;
+}
+
+.content-item.filtered-out {
+    display: none;
+}
+
+.content-grid {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+}
+
+.content-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.content-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.content-grid::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 4px;
+}
+
+.content-grid::-webkit-scrollbar-thumb:hover {
+    background: #764ba2;
+}
+
+.content-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    flex: 0 0 calc(50% - 1rem);
+    min-width: 320px;
+    scroll-snap-align: start;
+}
+
+.content-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.content-type {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: #667eea;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.content-item:hover .content-type {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.content-item.article .content-type {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.content-item.paper .content-type {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.content-item.blog .content-type {
+    background: linear-gradient(135deg, #764ba2, #667eea);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.content-item.event .content-type {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.content-date {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.content-item h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    line-height: 1.4;
+    font-weight: 600;
+    padding-right: 5.5rem;
+    /* Space for larger type badge */
+}
+
+.content-item p {
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.content-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.content-link:hover {
+    color: #764ba2;
+}
+
+.content-link::after {
+    content: '→';
+    transition: transform 0.3s ease;
+}
+
+.content-link:hover::after {
+    transform: translateX(4px);
+}
+
+/* Source indicator for external links */
+.news-source {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.news-source-logo {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.news-source-text {
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Additional links for news items */
+.additional-links {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid #667eea;
+}
+
+.additional-links h4 {
+    color: #2c3e50;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0 0 0.8rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.additional-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.additional-links li {
+    margin-bottom: 0.5rem;
+}
+
+.additional-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.additional-link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+.additional-link::before {
+    content: '📄';
+    font-size: 0.8rem;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(102, 126, 234, 0.9);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 25px 0 0 25px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 10;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.scroll-indicator:hover {
+    background: rgba(118, 75, 162, 0.9);
+    transform: translateY(-50%) translateX(5px);
+}
+
+.scroll-indicator .arrow {
+    animation: bounce-right 2s infinite;
+}
+
+@keyframes bounce-right {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateX(0);
+    }
+
+    40% {
+        transform: translateX(5px);
+    }
+
+    60% {
+        transform: translateX(3px);
+    }
+}
+
+/* Hide scroll indicator when scrolled to end */
+.scroll-indicator.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Responsive design for horizontal scrolling */
+@media (max-width: 768px) {
+    .content-item {
+        flex: 0 0 calc(100% - 1rem);
+        min-width: 280px;
+    }
+
+    .content-grid {
+        gap: 1.5rem;
+    }
+
+    .filter-controls {
+        gap: 0.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .content-item {
+        flex: 0 0 calc(50% - 1rem);
+        min-width: 300px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .content-item {
+        flex: 0 0 calc(50% - 1rem);
+        min-width: 320px;
+    }
+}
+
+/* LinkedIn Call-to-Action */
+.linkedin-cta {
+    flex: 0 0 calc(50% - 1rem);
+    min-width: 320px;
+    scroll-snap-align: start;
+    background: linear-gradient(135deg, #0077b5, #005885);
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 119, 181, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.linkedin-cta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 119, 181, 0.3);
+}
+
+.linkedin-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+    pointer-events: none;
+}
+
+.cta-content {
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.cta-content h3 {
+    color: white;
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.cta-content p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.linkedin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    color: #0077b5;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid transparent;
+}
+
+.linkedin-link:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.linkedin-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.linkedin-link:hover .linkedin-icon {
+    transform: scale(1.1);
+}
+
+/* Responsive adjustments for LinkedIn CTA */
+@media (max-width: 768px) {
+    .linkedin-cta {
+        flex: 0 0 calc(100% - 1rem);
+        min-width: 280px;
+    }
+
+    .cta-content {
+        padding: 1.5rem;
+    }
+
+    .cta-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .linkedin-link {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+    }
+}
