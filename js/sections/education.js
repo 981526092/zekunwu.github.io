@@ -12,7 +12,7 @@ class EducationManager {
           degree: "PhD in Computer Science (Part-Time)",
           institution: "University College London",
           date: "2024.01 - Present",
-          description: "Researching \"Sustainable and Responsible Agentic AI\" to address emerging sustainability and ethical challenges in Agentic AI. This research is co-supervised by Dr. María Pérez-Ortiz, Dr. Adriano Koshiyama, and Dr. Sahan Bulathwela.",
+          description: "Researching \"Sustainable and Responsible Agentic AI\" under co-supervision of Dr. María Pérez-Ortiz, Dr. Adriano Koshiyama, and Dr. Sahan Bulathwela.",
           achievements: [
             "Reviewer for ICLR 2025 Main Conference, ACL ARR 2024/2025, COLM 2025",
             "Program Committee for NeurIPS 2023/2024 (SoLaR Workshop), ICML 2024 (TiFA Workshop), EMNLP 2024 (CustomNLP4U Workshop)"
