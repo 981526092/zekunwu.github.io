@@ -15,7 +15,7 @@ class PublicationsManager {
         {
           title: "From Text to Emoji: How PEFT-Driven Personality Manipulation Unleashes the Emoji Potential in LLMs",
           venue: "NAACL 2025 (Findings) & NeurIPS 2024 Behavioral ML Workshop",
-          role: "Corresponding Author",
+          role: "Corresponding Author and Second Author",
           link: "https://arxiv.org/abs/2409.10245"
         },
         {
@@ -34,7 +34,7 @@ class PublicationsManager {
           title: "Towards Auditing Large Language Models: Improving Text-based Stereotype Detection",
           venue: "NeurIPS 2023 SoLaR Workshop",
           role: "First Co-author",
-          link: "https://arxiv.org/abs/2404.01768"
+          link: "https://arxiv.org/abs/2311.14126"
         },
         {
           title: "Bias Amplification: Language Models as Increasingly Biased Media",
