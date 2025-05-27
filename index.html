@@ -231,10 +231,10 @@
 
     <!-- Core JavaScript -->
     <script src="js/core/utils.js"></script>
+    <script src="js/core/plexusAnimation.js"></script>
     <script src="js/core/navigation.js"></script>
-    <script src="js/core/animations.js"></script>
 
-    <!-- Section JavaScript -->
+    <!-- Section JavaScript (Load hero.js early as it creates canvas needed by animations.js) -->
     <script src="js/sections/hero.js"></script>
     <script src="js/sections/about.js"></script>
     <script src="js/sections/blog.js"></script>
@@ -242,6 +242,9 @@
     <script src="js/sections/education.js"></script>
     <script src="js/sections/publications.js"></script>
     <script src="js/sections/contact.js"></script>
+
+    <!-- Animation System (after hero.js has potentially created the canvas) -->
+    <script src="js/core/animations.js"></script>
 
     <!-- Main Application -->
     <script src="js/app.js"></script>

@@ -86,6 +86,19 @@ class HeroManager {
         `).join('')}
       </div>
     `;
+
+    // Append canvas for plexus animation
+    const plexusCanvas = document.createElement('canvas');
+    plexusCanvas.id = 'hero-plexus-canvas';
+    // Ensure it's appended to .hero, not .hero-content, to be a true background element for the section
+    const heroSection = document.getElementById('home'); // Assuming 'home' is the ID of the .hero section
+    if (heroSection) {
+      heroSection.appendChild(plexusCanvas);
+    } else {
+      // Fallback if .hero section itself is not easily queryable by ID 'home'
+      // This might need adjustment based on actual DOM structure or if .hero is the direct parent
+      container.parentElement.appendChild(plexusCanvas); 
+    }
   }
 
   /**
