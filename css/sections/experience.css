@@ -165,6 +165,40 @@
     margin-bottom: 0.5rem;
     position: relative;
     z-index: 1;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.employment-tag {
+    display: inline-block;
+    padding: 0.3em 0.7em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.375rem;
+    margin-left: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+}
+
+.employment-tag-full-time {
+    color: #ffffff;
+    background-color: #2563eb;
+}
+
+.employment-tag-part-time {
+    color: #ffffff;
+    background-color: #10b981;
+}
+
+.employment-tag-freelance {
+    color: #ffffff;
+    background-color: #f59e0b;
 }
 
 .timeline-content h4 {
@@ -176,12 +210,30 @@
     z-index: 1;
 }
 
-.timeline-content p {
-    color: #6c757d;
-    line-height: 1.6;
+.timeline-content ul {
+    list-style-type: none;
+    padding-left: 0;
     margin-bottom: 0;
     position: relative;
     z-index: 1;
+}
+
+.timeline-content ul li {
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1.2em;
+}
+
+.timeline-content ul li::before {
+    content: "•";
+    color: #667eea;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1.2em;
+    position: absolute;
 }
 
 /* Animation keyframes */
@@ -220,4 +272,65 @@
 
 .timeline-item:nth-child(6) {
     --item-index: 6;
+}
+
+/* Responsive Timeline for Mobile */
+@media screen and (max-width: 768px) {
+    .timeline::before {
+        left: 30px;
+        margin-left: 0;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+    .timeline-item:nth-child(even) {
+        left: 0%;
+    }
+
+    .timeline-item::before {
+        left: 20px;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    .timeline-item:nth-child(even)::before {
+        left: 20px;
+        transform: translateX(-50%);
+    }
+
+    .timeline-date {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        display: inline-block;
+        margin-bottom: 1rem;
+        margin-left: -40px;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-date,
+    .timeline-item:nth-child(even) .timeline-date {
+        position: relative;
+        left: auto;
+        transform: none;
+        margin-left: -40px;
+    }
+
+    .timeline-content {
+        margin-top: 0;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .employment-tag {
+        font-size: 0.7rem;
+        margin-left: 0.5rem;
+        margin-top: 0.25rem;
+    }
 }

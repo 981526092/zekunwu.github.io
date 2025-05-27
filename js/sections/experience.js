@@ -8,8 +8,9 @@ class ExperienceManager {
       experiences: [
         {
           date: "2023.05 - Present",
-          title: "AI Research Scientist (Full Time)",
+          title: "AI Research Scientist",
           company: "Holistic AI, London, UK",
+          employmentType: "Full Time",
           responsibilities: [
             "Lead architect of the Agent Graph project for auditing multi-agent AI systems",
             "Developed Agentic AI Safety tools for auditing, monitoring, redteaming and benchmarking",
@@ -20,8 +21,9 @@ class ExperienceManager {
         },
         {
           date: "2024.08 - Present",
-          title: "AI Policy Researcher (Part Time)",
+          title: "AI Policy Researcher",
           company: "OECD.AI, Remote",
+          employmentType: "Part Time",
           responsibilities: [
             "Conducting R&D on a Policy Research RAG System, AIR",
             "Leading automated validation and enhancement of the OECD.AI Catalogue of Tools & Metrics"
@@ -31,6 +33,7 @@ class ExperienceManager {
           date: "2024.09 - Present",
           title: "Drafting Committee Member",
           company: "EU AI Office GP AI Code of Practice, Remote",
+          employmentType: "Part Time",
           responsibilities: [
             "Drafting the inaugural EU General-Purpose AI Code of Practice",
             "Contributing to Working Group 2 on systemic risk and EU AI Act compliance"
@@ -40,6 +43,7 @@ class ExperienceManager {
           date: "2024.09 - 2025.01",
           title: "Postgraduate Teaching Assistant",
           company: "University College London, London, UK",
+          employmentType: "Part Time",
           responsibilities: [
             "Teaching Assistant for COMP0173 \"AI for Sustainable Development\"",
             "Guest lecturer for COMP0195 \"Accountable, Transparent, and Responsible AI\""
@@ -47,8 +51,9 @@ class ExperienceManager {
         },
         {
           date: "2023.12 - Present",
-          title: "Founder Engineer (Freelance)",
+          title: "Founder Engineer",
           company: "SeeTalent, London, UK",
+          employmentType: "Freelance",
           responsibilities: [
             "Partnered with UCL and Goldsmiths psychologists to develop Agent-based psychometric analysis tools"
           ]
@@ -76,7 +81,10 @@ class ExperienceManager {
           <div class="timeline-item">
             <div class="timeline-date">${exp.date}</div>
             <div class="timeline-content">
-              <h3>${exp.title}</h3>
+              <h3>
+                ${exp.title}
+                ${exp.employmentType ? `<span class="employment-tag employment-tag-${exp.employmentType.toLowerCase().replace(' ', '-')}">${exp.employmentType}</span>` : ''}
+              </h3>
               <h4>${exp.company}</h4>
               <ul>
                 ${exp.responsibilities.map(resp => `<li>${resp}</li>`).join('')}
