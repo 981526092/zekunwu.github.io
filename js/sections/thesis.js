@@ -548,24 +548,6 @@ class ThesisManager {
 
     return `
       <div class="distribution-view">
-        <div class="distribution-header">
-          <h3>📊 TODO Distribution Analysis</h3>
-          <p>Comprehensive breakdown of ${totalTodos} thesis tasks and priorities</p>
-          <div class="distribution-stats">
-            <div class="stat-card">
-              <div class="stat-number">${Object.keys(distributions.byPriority).length}</div>
-              <div class="stat-label">Priority Levels</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-number">${Object.keys(distributions.byCategory).length}</div>
-              <div class="stat-label">Categories</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-number">${Object.keys(distributions.byPart).length}</div>
-              <div class="stat-label">Thesis Parts</div>
-            </div>
-          </div>
-        </div>
 
         <div class="compact-distribution">
           <div class="distribution-section">
