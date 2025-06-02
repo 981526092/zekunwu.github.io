@@ -477,16 +477,7 @@ class ThesisManager {
           </div>
         </div>
 
-        <div class="todo-distribution">
-          <div class="distribution-header">
-            <h3>📊 TODO Distribution Analysis 
-              <span class="tooltip-trigger" data-tooltip="Breakdown of TODO items by priority, category, and thesis parts. Helps identify focus areas and bottlenecks.">ℹ️</span>
-            </h3>
-          </div>
-          <div class="distribution-content">
-            ${this.renderTodoDistribution(metrics)}
-          </div>
-        </div>
+
 
 
       </div>
