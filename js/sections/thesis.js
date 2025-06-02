@@ -387,6 +387,11 @@ class ThesisManager {
                   style="display: block !important; visibility: visible !important;">
             📊 Dashboard
           </button>
+          <button class="nav-btn ${this.currentView === 'distribution' ? 'active' : ''}" 
+                  onclick="thesisManager.switchView('distribution')"
+                  style="display: block !important; visibility: visible !important;">
+            📈 Distribution
+          </button>
           <button class="nav-btn ${this.currentView === 'blog' ? 'active' : ''}" 
                   onclick="thesisManager.switchView('blog')"
                   style="display: block !important; visibility: visible !important;">
@@ -423,6 +428,8 @@ class ThesisManager {
     switch (this.currentView) {
       case 'dashboard':
         return this.renderDashboard(metrics);
+      case 'distribution':
+        return this.renderDistributionView(metrics);
       case 'blog':
         return this.renderBlog();
       default:
@@ -493,43 +500,137 @@ class ThesisManager {
           </div>
         </div>
 
-        <div class="methodology-summary">
-          <div class="methodology-header">
-            <h3>🔬 Research Methodology Overview 
-              <span class="tooltip-trigger" data-tooltip="Click to expand detailed methodology and calculation explanations">ℹ️</span>
-            </h3>
+
+      </div>
+    `;
+  }
+
+  renderDistributionView(metrics) {
+    const distributions = this.calculateDistributions();
+    const totalTodos = metrics.totalTodos;
+
+    if (totalTodos === 0) {
+      return `
+        <div class="distribution-view">
+          <div class="distribution-header">
+            <h3>📊 TODO Distribution Analysis</h3>
+            <p>Comprehensive breakdown of thesis tasks and priorities</p>
           </div>
-          <div class="methodology-quick-info">
-            <div class="methodology-item">
-              <strong>Progress Calculation:</strong> 
-              <span class="methodology-formula">(Completed TODOs / Total TODOs) × 100</span>
-              <span class="tooltip-trigger" data-tooltip="Each TODO represents a specific research task, validation requirement, or implementation milestone. Completion tracked through automated parsing of LaTeX comments.">?</span>
+          <div class="no-todos">
+            <div class="no-todos-icon">📋</div>
+            <h4>No TODO data available</h4>
+            <p>Data loading may have failed or no TODOs are currently tracked.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // Priority distribution with colors
+    const priorityColors = {
+      'CRITICAL': '#dc3545',
+      'HIGH': '#fd7e14', 
+      'MEDIUM': '#0d6efd',
+      'EXTERNAL': '#6f42c1',
+      'UNSPECIFIED': '#6c757d'
+    };
+
+    // Category colors
+    const categoryColors = {
+      'Validation': '#dc3545',
+      'Research': '#198754',
+      'Implementation': '#0d6efd',
+      'Data Collection': '#fd7e14',
+      'Performance': '#6f42c1',
+      'Expert Review': '#20c997',
+      'Security/Ethics': '#e83e8c',
+      'Other': '#6c757d'
+    };
+
+    return `
+      <div class="distribution-view">
+        <div class="distribution-header">
+          <h3>📊 TODO Distribution Analysis</h3>
+          <p>Comprehensive breakdown of ${totalTodos} thesis tasks and priorities</p>
+          <div class="distribution-stats">
+            <div class="stat-card">
+              <div class="stat-number">${Object.keys(distributions.byPriority).length}</div>
+              <div class="stat-label">Priority Levels</div>
             </div>
-            <div class="methodology-item">
-              <strong>Quality Score:</strong> 
-              <span class="methodology-formula">100 - (Critical + High Priority TODOs / Total TODOs) × 100</span>
-              <span class="tooltip-trigger" data-tooltip="Quality inversely related to proportion of critical/high-priority issues. Encourages addressing fundamental research gaps early.">?</span>
+            <div class="stat-card">
+              <div class="stat-number">${Object.keys(distributions.byCategory).length}</div>
+              <div class="stat-label">Categories</div>
             </div>
-            <div class="methodology-item">
-              <strong>Automated Workflows:</strong> 
-              <span class="methodology-text">Daily TODO review, build verification, weekly comprehensive analysis</span>
-              <span class="tooltip-trigger" data-tooltip="Daily: Critical TODO review, LaTeX build verification, progress snapshots. Weekly: Comprehensive analysis, quality metrics, trend tracking.">?</span>
+            <div class="stat-card">
+              <div class="stat-number">${Object.keys(distributions.byPart).length}</div>
+              <div class="stat-label">Thesis Parts</div>
             </div>
           </div>
         </div>
 
-        <div class="data-status">
-          <div class="status-header">
-            <h3>Data Synchronization Status</h3>
-            <div class="sync-indicator active">
-              <div class="sync-dot"></div>
-              <span>Live Data</span>
+        <div class="compact-distribution">
+          <div class="distribution-section">
+            <h4>🎯 Priority Breakdown</h4>
+            <div class="compact-chart">
+              ${Object.entries(distributions.byPriority).sort((a, b) => b[1] - a[1]).map(([priority, count]) => {
+                const percentage = ((count / totalTodos) * 100).toFixed(1);
+                const color = priorityColors[priority] || '#6c757d';
+                return `
+                  <div class="compact-bar">
+                    <div class="bar-info">
+                      <span class="bar-label">${priority}</span>
+                      <span class="bar-value">${count} (${percentage}%)</span>
+                    </div>
+                    <div class="bar-track">
+                      <div class="bar-fill" style="width: ${percentage}%; background-color: ${color};"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
             </div>
           </div>
-          <div class="status-info">
-            <p><strong>Last Updated:</strong> ${new Date(this.data?.lastUpdated || Date.now()).toLocaleString()}</p>
-            <p><strong>Data Source:</strong> Automated thesis management system</p>
-            <p><strong>Update Frequency:</strong> Daily automated workflows</p>
+
+          <div class="distribution-section">
+            <h4>📂 Category Breakdown</h4>
+            <div class="compact-chart">
+              ${Object.entries(distributions.byCategory).sort((a, b) => b[1] - a[1]).map(([category, count]) => {
+                const percentage = ((count / totalTodos) * 100).toFixed(1);
+                const color = categoryColors[category] || '#6c757d';
+                return `
+                  <div class="compact-bar">
+                    <div class="bar-info">
+                      <span class="bar-label">${category}</span>
+                      <span class="bar-value">${count} (${percentage}%)</span>
+                    </div>
+                    <div class="bar-track">
+                      <div class="bar-fill" style="width: ${percentage}%; background-color: ${color};"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <div class="distribution-section full-width">
+            <h4>📚 Thesis Parts Distribution</h4>
+            <div class="parts-grid-compact">
+              ${Object.entries(distributions.byPart).sort((a, b) => b[1] - a[1]).map(([part, count]) => {
+                const percentage = ((count / totalTodos) * 100).toFixed(1);
+                return `
+                  <div class="part-card-compact">
+                    <div class="part-header-compact">
+                      <div class="part-name-compact">${part}</div>
+                      <div class="part-stats-compact">
+                        <span class="part-count-compact">${count}</span>
+                        <span class="part-percentage-compact">${percentage}%</span>
+                      </div>
+                    </div>
+                    <div class="part-bar-compact">
+                      <div class="part-fill-compact" style="width: ${percentage}%"></div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
           </div>
         </div>
       </div>
