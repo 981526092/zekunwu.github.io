@@ -2187,7 +2187,7 @@
 
 .compact-distribution {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 2rem;
     margin-top: 0;
 }
@@ -2200,9 +2200,7 @@
     border: 1px solid #e2e8f0;
 }
 
-.distribution-section.full-width {
-    grid-column: 1 / -1;
-}
+
 
 .distribution-section h4 {
     font-size: 1.25rem;

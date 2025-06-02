@@ -564,31 +564,41 @@ class ThesisManager {
             </div>
           </div>
 
-          <div class="distribution-section full-width">
+          <div class="distribution-section">
             <h4>📚 Thesis Parts Distribution</h4>
-            <div class="parts-grid-compact">
-              ${Object.entries(distributions.byPart).sort((a, b) => b[1] - a[1]).map(([part, count]) => {
-                const percentage = ((count / totalTodos) * 100).toFixed(1);
-                return `
-                  <div class="part-card-compact">
-                    <div class="part-header-compact">
-                      <div class="part-name-compact">${part}</div>
-                      <div class="part-stats-compact">
-                        <span class="part-count-compact">${count}</span>
-                        <span class="part-percentage-compact">${percentage}%</span>
-                      </div>
-                    </div>
-                    <div class="part-bar-compact">
-                      <div class="part-fill-compact" style="width: ${percentage}%"></div>
-                    </div>
-                  </div>
-                `;
-              }).join('')}
+            <div class="pie-chart-container">
+              ${this.renderPieChart(distributions.byPart, this.getPartsColors(), totalTodos, 'parts')}
             </div>
           </div>
         </div>
       </div>
     `;
+  }
+
+  getPartsColors() {
+    return {
+      'Part I: Foundations': '#667eea',
+      'Part II: Trace Instrumentation': '#48bb78',
+      'Part III: Knowledge Graph': '#ed8936',
+      'Part IV: Anomaly Detection': '#e53e3e',
+      'Part V: Robustness Testing': '#805ad5',
+      'Part VI: Causal Attribution': '#38b2ac',
+      'Part VII: Case Studies': '#d69e2e',
+      'Part VIII: Synthesis': '#3182ce',
+      'Unknown': '#a0aec0',
+      'TODO_EXAMPLES.tex': '#718096',
+      'Introduction': '#667eea',
+      'Agent Landscape': '#4fd1c7',
+      'System Model': '#9f7aea',
+      'Foundations': '#667eea',
+      'Trace Instrumentation': '#48bb78',
+      'Knowledge Graph': '#ed8936',
+      'Anomaly Detection': '#e53e3e',
+      'Robustness Testing': '#805ad5',
+      'Causal Attribution': '#38b2ac',
+      'Case Studies': '#d69e2e',
+      'Synthesis': '#3182ce'
+    };
   }
 
   renderPieChart(data, colors, totalTodos, chartId) {
