@@ -639,8 +639,6 @@ class ThesisManager {
     return `
       <div class="blog-view">
         <div class="blog-header">
-          <h3>📑 Thesis Progress Reports Timeline</h3>
-          <p>Scrollable timeline of automated reports organized by week. Click any report to expand details.</p>
           <div class="report-controls">
             <div class="report-stats">
               <span class="stat-item">📈 ${this.reports.length} Total Reports</span>
