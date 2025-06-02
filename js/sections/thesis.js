@@ -83,7 +83,6 @@ class ThesisManager {
       categoryCounts,
       completionRate,
       qualityMetrics: this.calculateQualityMetrics(priorityCounts, totalTodos),
-      timeline: this.generateTimeline(partCounts),
       lastUpdated: new Date().toISOString()
     };
   }
@@ -114,58 +113,7 @@ class ThesisManager {
     };
   }
 
-  generateTimeline(partCounts) {
-    // Calculate progress based on actual TODO completion rates
-    const today = new Date();
-    const currentProgress = this.progressData ? this.progressData.completionRate : 75;
-    
-    const milestones = [
-      {
-        date: '2023-10-01',
-        title: 'PhD Research Commenced',
-        description: 'Started comprehensive research on distributed AI agent observability',
-        status: 'completed',
-        progress: 100
-      },
-      {
-        date: '2024-03-15',
-        title: 'Core Methodology Established',
-        description: 'AgentGraph framework architecture and theoretical foundation',
-        status: 'completed',
-        progress: 100
-      },
-      {
-        date: '2024-08-30',
-        title: 'First Major Publication',
-        description: 'Research paper accepted and presented at international conference',
-        status: 'completed',
-        progress: 100
-      },
-      {
-        date: '2025-01-30',
-        title: 'Implementation & Validation',
-        description: 'Comprehensive experimental evaluation and case study analysis',
-        status: 'in-progress',
-        progress: Math.max(60, currentProgress)
-      },
-      {
-        date: '2025-05-15',
-        title: 'Thesis Writing Completion',
-        description: 'Final chapters completion and comprehensive review',
-        status: currentProgress > 85 ? 'in-progress' : 'planned',
-        progress: Math.max(0, currentProgress - 20)
-      },
-      {
-        date: '2025-08-01',
-        title: 'Thesis Submission',
-        description: 'Final submission and preparation for doctoral examination',
-        status: 'planned',
-        progress: Math.max(0, currentProgress - 60)
-      }
-    ];
-
-    return milestones;
-  }
+  // Removed generateTimeline() - only show real data
 
   // Removed getFallbackData() - only use real data
 
@@ -246,32 +194,9 @@ class ThesisManager {
             <div class="progress-percentage">Fully Automated Workflows</div>
           </div>
         </div>
-      </div>
+             </div>
 
-      <!-- Research Timeline -->
-      <div class="thesis-timeline">
-        <div class="timeline-header">
-          <i class="fas fa-timeline" style="color: #667eea; font-size: 1.5rem;"></i>
-          <h3>Research Timeline & Milestones</h3>
-        </div>
-        <div class="timeline-items">
-          ${data.timeline.map(item => `
-            <div class="timeline-item ${item.status}">
-              <div class="timeline-date">${this.formatDate(item.date)}</div>
-              <div class="timeline-title">${item.title}</div>
-              <div class="timeline-description">${item.description}</div>
-              <div class="progress-bar-container">
-                <div class="progress-bar">
-                  <div class="progress-bar-fill" data-progress="${item.progress}"></div>
-                </div>
-                <div class="progress-percentage">${item.progress}% Complete</div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-
-      <!-- Quality Metrics -->
+       <!-- Quality Metrics -->
       <div class="quality-metrics">
         <div class="metric-card">
           <div class="metric-icon success">
@@ -303,63 +228,10 @@ class ThesisManager {
           </div>
           <div class="metric-value">${criticalTodos}</div>
           <div class="metric-label">Critical Issues</div>
-        </div>
-      </div>
+                 </div>
+       </div>
 
-      <!-- Research Methodology Showcase -->
-      <div class="methodology-showcase">
-        <h3 style="margin-bottom: 16px; color: #1a202c;">
-          <i class="fas fa-cogs" style="color: #667eea; margin-right: 8px;"></i>
-          Systematic Research Methodology
-        </h3>
-        <p style="color: #4a5568; margin-bottom: 24px;">
-          Demonstrating rigorous, tool-assisted thesis management with comprehensive quality assurance and progress tracking.
-        </p>
-        
-        <div class="methodology-grid">
-          <div class="methodology-item">
-            <h4><i class="fas fa-tasks" style="color: #667eea; margin-right: 8px;"></i>Automated Workflow Management</h4>
-            <ul>
-              <li>Daily progress tracking and critical TODO analysis</li>
-              <li>Weekly comprehensive reviews and quality checks</li>
-              <li>Automated build verification and error detection</li>
-              <li>Smart LaTeX compilation with cleanup automation</li>
-            </ul>
-          </div>
-
-          <div class="methodology-item">
-            <h4><i class="fas fa-chart-bar" style="color: #667eea; margin-right: 8px;"></i>Quality Assurance Process</h4>
-            <ul>
-              <li>Systematic TODO categorization and priority management</li>
-              <li>Citation completeness and formatting validation</li>
-              <li>Word count tracking and content metrics</li>
-              <li>Pre-submission validation pipeline</li>
-            </ul>
-          </div>
-
-          <div class="methodology-item">
-            <h4><i class="fas fa-code-branch" style="color: #667eea; margin-right: 8px;"></i>Version Control & Collaboration</h4>
-            <ul>
-              <li>Git-based version control with GitHub integration</li>
-              <li>Overleaf synchronization for collaborative editing</li>
-              <li>Automated conflict resolution and merge handling</li>
-              <li>Progress report generation for supervisor meetings</li>
-            </ul>
-          </div>
-
-          <div class="methodology-item">
-            <h4><i class="fas fa-search" style="color: #667eea; margin-right: 8px;"></i>Research Validation Framework</h4>
-            <ul>
-              <li>Systematic empirical validation tracking</li>
-              <li>Mock data identification and replacement monitoring</li>
-              <li>Expert review coordination and feedback integration</li>
-              <li>Reproducible experiment pipeline management</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div style="text-align: center; margin-top: 32px; padding: 24px; background: #f8fafc; border-radius: 12px;">
+       <div style="text-align: center; margin-top: 32px; padding: 24px; background: #f8fafc; border-radius: 12px;">
         <p style="color: #4a5568; margin-bottom: 8px;">
           <i class="fas fa-clock" style="color: #667eea; margin-right: 8px;"></i>
           Last Updated: ${this.formatDateTime(data.lastUpdated)}
@@ -424,23 +296,19 @@ class ThesisManager {
         <i class="fas fa-sync-alt" style="font-size: 3rem; color: #667eea; margin-bottom: 16px;"></i>
         <h3>PhD Progress Data Loading</h3>
         <p style="margin-bottom: 24px;">Real-time thesis progress data is being synchronized from the research workflow system.</p>
-        <div style="background: #f8fafc; padding: 24px; border-radius: 12px; max-width: 600px; margin: 0 auto;">
-          <h4 style="color: #1a202c; margin-bottom: 16px;">
-            <i class="fas fa-cogs" style="color: #667eea; margin-right: 8px;"></i>
-            Research Management System Overview
-          </h4>
-                     <ul style="text-align: left; color: #4a5568; line-height: 1.8;">
-             <li><strong>Comprehensive TODO tracking</strong> across 8 thesis parts</li>
-             <li><strong>Priority-based workflow management</strong> with critical item focus</li>
-             <li><strong>Automated daily workflows</strong> with progress tracking</li>
-             <li><strong>Quality assurance pipeline</strong> with validation metrics</li>
-             <li><strong>Real-time synchronization</strong> between Overleaf and GitHub</li>
-           </ul>
-          <p style="margin-top: 16px; font-size: 0.875rem; color: #718096;">
-            This dashboard displays live data from the comprehensive thesis management system, 
-            demonstrating systematic research methodology and automated quality control.
-          </p>
-        </div>
+                 <div style="background: #f8fafc; padding: 24px; border-radius: 12px; max-width: 600px; margin: 0 auto;">
+           <h4 style="color: #1a202c; margin-bottom: 16px;">
+             <i class="fas fa-cogs" style="color: #667eea; margin-right: 8px;"></i>
+             PhD Thesis Management System
+           </h4>
+           <p style="text-align: left; color: #4a5568; line-height: 1.8; margin-bottom: 16px;">
+             This dashboard displays real-time data from a comprehensive thesis workflow management system, 
+             including TODO tracking, priority management, automated daily workflows, and quality assurance metrics.
+           </p>
+           <p style="font-size: 0.875rem; color: #718096;">
+             Data is automatically synchronized from the integrated research workflow tools.
+           </p>
+         </div>
       </div>
     `;
   }
