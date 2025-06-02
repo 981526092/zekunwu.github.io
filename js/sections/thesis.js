@@ -552,43 +552,15 @@ class ThesisManager {
         <div class="compact-distribution">
           <div class="distribution-section">
             <h4>🎯 Priority Breakdown</h4>
-            <div class="compact-chart">
-              ${Object.entries(distributions.byPriority).sort((a, b) => b[1] - a[1]).map(([priority, count]) => {
-                const percentage = ((count / totalTodos) * 100).toFixed(1);
-                const color = priorityColors[priority] || '#6c757d';
-                return `
-                  <div class="compact-bar">
-                    <div class="bar-info">
-                      <span class="bar-label">${priority}</span>
-                      <span class="bar-value">${count} (${percentage}%)</span>
-                    </div>
-                    <div class="bar-track">
-                      <div class="bar-fill" style="width: ${percentage}%; background-color: ${color};"></div>
-                    </div>
-                  </div>
-                `;
-              }).join('')}
+            <div class="pie-chart-container">
+              ${this.renderPieChart(distributions.byPriority, priorityColors, totalTodos, 'priority')}
             </div>
           </div>
 
           <div class="distribution-section">
             <h4>📂 Category Breakdown</h4>
-            <div class="compact-chart">
-              ${Object.entries(distributions.byCategory).sort((a, b) => b[1] - a[1]).map(([category, count]) => {
-                const percentage = ((count / totalTodos) * 100).toFixed(1);
-                const color = categoryColors[category] || '#6c757d';
-                return `
-                  <div class="compact-bar">
-                    <div class="bar-info">
-                      <span class="bar-label">${category}</span>
-                      <span class="bar-value">${count} (${percentage}%)</span>
-                    </div>
-                    <div class="bar-track">
-                      <div class="bar-fill" style="width: ${percentage}%; background-color: ${color};"></div>
-                    </div>
-                  </div>
-                `;
-              }).join('')}
+            <div class="pie-chart-container">
+              ${this.renderPieChart(distributions.byCategory, categoryColors, totalTodos, 'category')}
             </div>
           </div>
 
@@ -614,6 +586,83 @@ class ThesisManager {
               }).join('')}
             </div>
           </div>
+        </div>
+      </div>
+    `;
+  }
+
+  renderPieChart(data, colors, totalTodos, chartId) {
+    const sortedData = Object.entries(data).sort((a, b) => b[1] - a[1]);
+    const size = 200;
+    const center = size / 2;
+    const radius = 80;
+    
+    let cumulativeAngle = 0;
+    const slices = sortedData.map(([label, count]) => {
+      const percentage = (count / totalTodos) * 100;
+      const angle = (count / totalTodos) * 360;
+      const startAngle = cumulativeAngle;
+      const endAngle = cumulativeAngle + angle;
+      
+      // Convert angles to radians for SVG path calculations
+      const startAngleRad = (startAngle - 90) * (Math.PI / 180);
+      const endAngleRad = (endAngle - 90) * (Math.PI / 180);
+      
+      // Calculate arc endpoints
+      const x1 = center + radius * Math.cos(startAngleRad);
+      const y1 = center + radius * Math.sin(startAngleRad);
+      const x2 = center + radius * Math.cos(endAngleRad);
+      const y2 = center + radius * Math.sin(endAngleRad);
+      
+      // Large arc flag (1 if angle > 180 degrees)
+      const largeArcFlag = angle > 180 ? 1 : 0;
+      
+      // Create SVG path for the slice
+      const pathData = [
+        `M ${center} ${center}`,
+        `L ${x1} ${y1}`,
+        `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
+        'Z'
+      ].join(' ');
+      
+      cumulativeAngle += angle;
+      
+      const color = colors[label] || '#6c757d';
+      
+      return {
+        label,
+        count,
+        percentage: percentage.toFixed(1),
+        pathData,
+        color
+      };
+    });
+    
+    return `
+      <div class="pie-chart-wrapper">
+        <div class="pie-chart">
+          <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+            ${slices.map(slice => `
+              <path d="${slice.pathData}" 
+                    fill="${slice.color}" 
+                    stroke="white" 
+                    stroke-width="2"
+                    class="pie-slice">
+                <title>${slice.label}: ${slice.count} (${slice.percentage}%)</title>
+              </path>
+            `).join('')}
+          </svg>
+        </div>
+        <div class="pie-legend">
+          ${slices.map(slice => `
+            <div class="legend-item">
+              <div class="legend-color" style="background-color: ${slice.color};"></div>
+              <div class="legend-info">
+                <span class="legend-label">${slice.label}</span>
+                <span class="legend-value">${slice.count} (${slice.percentage}%)</span>
+              </div>
+            </div>
+          `).join('')}
         </div>
       </div>
     `;
