@@ -24,7 +24,10 @@ class ThesisManager {
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-      const todoData = await response.json();
+      const jsonData = await response.json();
+      
+      // Extract the todos array from the JSON structure
+      const todoData = jsonData.todos || [];
       
       // Process the data into our format
       this.progressData = this.processProgressData(todoData);
@@ -54,12 +57,12 @@ class ThesisManager {
     const categoryCounts = {};
 
     todoData.forEach(todo => {
-      // Priority analysis
-      const priority = todo.priority || 'MEDIUM';
+      // Priority analysis using priority_name field
+      const priority = todo.priority_name || 'MEDIUM';
       priorityCounts[priority] = (priorityCounts[priority] || 0) + 1;
 
-      // Part analysis
-      const part = this.extractPart(todo.file || '');
+      // Part analysis using file_path field
+      const part = this.extractPart(todo.file_path || '');
       if (part) {
         partCounts[part] = (partCounts[part] || 0) + 1;
       }
@@ -426,13 +429,13 @@ class ThesisManager {
             <i class="fas fa-cogs" style="color: #667eea; margin-right: 8px;"></i>
             Research Management System Overview
           </h4>
-          <ul style="text-align: left; color: #4a5568; line-height: 1.8;">
-            <li><strong>574 Total TODOs</strong> tracked across 8 thesis parts</li>
-            <li><strong>121 Critical items</strong> requiring immediate attention</li>
-            <li><strong>Automated daily workflows</strong> with progress tracking</li>
-            <li><strong>Quality assurance pipeline</strong> with validation metrics</li>
-            <li><strong>Real-time synchronization</strong> between Overleaf and GitHub</li>
-          </ul>
+                     <ul style="text-align: left; color: #4a5568; line-height: 1.8;">
+             <li><strong>Comprehensive TODO tracking</strong> across 8 thesis parts</li>
+             <li><strong>Priority-based workflow management</strong> with critical item focus</li>
+             <li><strong>Automated daily workflows</strong> with progress tracking</li>
+             <li><strong>Quality assurance pipeline</strong> with validation metrics</li>
+             <li><strong>Real-time synchronization</strong> between Overleaf and GitHub</li>
+           </ul>
           <p style="margin-top: 16px; font-size: 0.875rem; color: #718096;">
             This dashboard displays live data from the comprehensive thesis management system, 
             demonstrating systematic research methodology and automated quality control.
