@@ -6,6 +6,7 @@ class ThesisManager {
     this.reports = [];
     this.currentView = 'dashboard';
     this.currentSort = 'date';
+    this.currentChartType = 'priority'; // priority, category, parts
   }
 
   async init() {
@@ -512,10 +513,6 @@ class ThesisManager {
     if (totalTodos === 0) {
       return `
         <div class="distribution-view">
-          <div class="distribution-header">
-            <h3>📊 TODO Distribution Analysis</h3>
-            <p>Comprehensive breakdown of thesis tasks and priorities</p>
-          </div>
           <div class="no-todos">
             <div class="no-todos-icon">📋</div>
             <h4>No TODO data available</h4>
@@ -525,50 +522,70 @@ class ThesisManager {
       `;
     }
 
-    // Priority distribution with colors
-    const priorityColors = {
-      'CRITICAL': '#dc3545',
-      'HIGH': '#fd7e14', 
-      'MEDIUM': '#0d6efd',
-      'EXTERNAL': '#6f42c1',
-      'UNSPECIFIED': '#6c757d'
-    };
-
-    // Category colors
-    const categoryColors = {
-      'Validation': '#dc3545',
-      'Research': '#198754',
-      'Implementation': '#0d6efd',
-      'Data Collection': '#fd7e14',
-      'Performance': '#6f42c1',
-      'Expert Review': '#20c997',
-      'Security/Ethics': '#e83e8c',
-      'Other': '#6c757d'
-    };
+    // Get current chart data and colors based on selected type
+    let currentData, currentColors, currentTitle, currentIcon;
+    
+    switch (this.currentChartType) {
+      case 'priority':
+        currentData = distributions.byPriority;
+        currentColors = {
+          'CRITICAL': '#dc3545',
+          'HIGH': '#fd7e14', 
+          'MEDIUM': '#0d6efd',
+          'EXTERNAL': '#6f42c1',
+          'UNSPECIFIED': '#6c757d'
+        };
+        currentTitle = 'Priority Breakdown';
+        currentIcon = '🎯';
+        break;
+      case 'category':
+        currentData = distributions.byCategory;
+        currentColors = {
+          'Validation': '#dc3545',
+          'Research': '#198754',
+          'Implementation': '#0d6efd',
+          'Data Collection': '#fd7e14',
+          'Performance': '#6f42c1',
+          'Expert Review': '#20c997',
+          'Security/Ethics': '#e83e8c',
+          'Other': '#6c757d'
+        };
+        currentTitle = 'Category Breakdown';
+        currentIcon = '📂';
+        break;
+      case 'parts':
+        currentData = distributions.byPart;
+        currentColors = this.getPartsColors();
+        currentTitle = 'Thesis Parts Distribution';
+        currentIcon = '📚';
+        break;
+    }
 
     return `
       <div class="distribution-view">
+        <div class="chart-tabs">
+          <button class="chart-tab ${this.currentChartType === 'priority' ? 'active' : ''}" 
+                  onclick="thesisManager.switchChart('priority')">
+            🎯 Priority
+          </button>
+          <button class="chart-tab ${this.currentChartType === 'category' ? 'active' : ''}" 
+                  onclick="thesisManager.switchChart('category')">
+            📂 Category
+          </button>
+          <button class="chart-tab ${this.currentChartType === 'parts' ? 'active' : ''}" 
+                  onclick="thesisManager.switchChart('parts')">
+            📚 Parts
+          </button>
+        </div>
 
-        <div class="compact-distribution">
-          <div class="distribution-section">
-            <h4>🎯 Priority Breakdown</h4>
-            <div class="pie-chart-container">
-              ${this.renderPieChart(distributions.byPriority, priorityColors, totalTodos, 'priority')}
-            </div>
+        <div class="single-chart-container">
+          <div class="chart-header">
+            <h3>${currentIcon} ${currentTitle}</h3>
+            <p>${Object.keys(currentData).length} different ${this.currentChartType === 'parts' ? 'thesis parts' : this.currentChartType === 'priority' ? 'priority levels' : 'categories'} • ${totalTodos} total items</p>
           </div>
-
-          <div class="distribution-section">
-            <h4>📂 Category Breakdown</h4>
-            <div class="pie-chart-container">
-              ${this.renderPieChart(distributions.byCategory, categoryColors, totalTodos, 'category')}
-            </div>
-          </div>
-
-          <div class="distribution-section">
-            <h4>📚 Thesis Parts Distribution</h4>
-            <div class="pie-chart-container">
-              ${this.renderPieChart(distributions.byPart, this.getPartsColors(), totalTodos, 'parts')}
-            </div>
+          
+          <div class="single-pie-chart-container">
+            ${this.renderPieChart(currentData, currentColors, totalTodos, this.currentChartType)}
           </div>
         </div>
       </div>
@@ -1016,6 +1033,11 @@ class ThesisManager {
 
   switchView(view) {
     this.currentView = view;
+    this.render();
+  }
+
+  switchChart(chartType) {
+    this.currentChartType = chartType;
     this.render();
   }
 
