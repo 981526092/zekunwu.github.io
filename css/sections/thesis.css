@@ -1244,6 +1244,7 @@
 
     .progress-cards {
         grid-template-columns: 1fr;
+        max-width: none;
     }
 
     .metrics-grid {

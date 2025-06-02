@@ -473,20 +473,7 @@ class ThesisManager {
               </div>
             </div>
 
-            <div class="progress-card quality">
-              <div class="card-icon">⭐</div>
-              <div class="card-content">
-                <h3>Research Quality 
-                  <span class="tooltip-trigger" data-tooltip="Quality Score = 100 - (Critical + High Priority TODOs / Total TODOs) × 100. Higher scores indicate fewer fundamental research gaps.">ℹ️</span>
-                </h3>
-                <div class="metric-value">${metrics.qualityScore}%</div>
-                <div class="metric-label">QUALITY SCORE</div>
-                <div class="progress-bar">
-                  <div class="progress-fill quality" style="width: ${metrics.qualityScore}%"></div>
-                </div>
-                <div class="metric-detail">High Standards Maintained</div>
-              </div>
-            </div>
+
           </div>
         </div>
 
