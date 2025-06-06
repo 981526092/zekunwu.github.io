@@ -35,6 +35,7 @@ class App {
       about: window.aboutManager,
       experience: window.experienceManager,
       education: window.educationManager,
+      thesis: window.thesisManager,
       publications: window.publicationsManager,
       contact: window.contactManager
     };
